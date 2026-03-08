@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Create professional letterhead documents for Fountain Vitality">
+    <meta name="theme-color" content="#1a2540">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
     <title>Fountain Letterhead Filler</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
@@ -1219,11 +1223,365 @@
             font-size: 10px;
             color: #4fc3f7;
         }
+
+        /* Recent Documents Modal */
+        .recent-docs-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .recent-doc-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .recent-doc-item:hover {
+            background: #f5f5f5;
+            border-color: #4fc3f7;
+        }
+        body.dark-mode .recent-doc-item {
+            border-color: #2a3550;
+            background: #1a2540;
+        }
+        body.dark-mode .recent-doc-item:hover {
+            background: #2a3550;
+        }
+        .recent-doc-info {
+            flex: 1;
+        }
+        .recent-doc-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .recent-doc-meta {
+            font-size: 0.75rem;
+            color: #999;
+        }
+        .recent-doc-actions {
+            display: flex;
+            gap: 8px;
+        }
+        .recent-doc-btn {
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+        .recent-doc-btn:hover {
+            background: #f5f5f5;
+        }
+        .recent-doc-btn.delete {
+            color: #f44336;
+            border-color: #f44336;
+        }
+        .recent-doc-btn.delete:hover {
+            background: #ffebee;
+        }
+        body.dark-mode .recent-doc-btn {
+            background: #16213e;
+            border-color: #2a3550;
+            color: #ccc;
+        }
+
+        /* Print Preview Mode */
+        body.print-preview-mode .header,
+        body.print-preview-mode .sidebar,
+        body.print-preview-mode .preview-bar,
+        body.print-preview-mode .preview-controls {
+            display: none !important;
+        }
+        body.print-preview-mode .main-container {
+            margin-top: 0;
+            height: 100vh;
+        }
+        body.print-preview-mode .preview-panel {
+            background: #444;
+        }
+        body.print-preview-mode .preview-area {
+            padding: 40px;
+        }
+        .print-preview-exit {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            padding: 12px 24px;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        body.print-preview-mode .print-preview-exit {
+            display: block;
+        }
+        .print-preview-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: none;
+            gap: 12px;
+            background: white;
+            padding: 16px 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        body.print-preview-mode .print-preview-controls {
+            display: flex;
+        }
+
+        /* Image Insert */
+        .image-upload-zone {
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 16px;
+        }
+        .image-upload-zone:hover {
+            border-color: #4fc3f7;
+            background: #e3f7fd;
+        }
+        .image-preview-container {
+            max-height: 200px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+        .image-preview-container img {
+            max-width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+        }
+        .image-size-controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .image-size-controls label {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 0.85rem;
+        }
+        .image-size-controls input {
+            width: 80px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        body.dark-mode .image-size-controls input {
+            background: #1a2540;
+            border-color: #2a3550;
+            color: #ccc;
+        }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 1024px) {
+            .header {
+                flex-wrap: wrap;
+                height: auto;
+                padding: 12px;
+                gap: 12px;
+            }
+            .letterhead-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+            .lh-btn {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+            .main-container {
+                margin-top: 120px;
+                height: calc(100vh - 120px);
+            }
+            .sidebar {
+                width: 280px;
+                min-width: 280px;
+            }
+            .sidebar.collapsed {
+                margin-left: -280px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 10px;
+            }
+            .header-text h1 {
+                font-size: 1.1rem;
+            }
+            .header-text p {
+                display: none;
+            }
+            .letterhead-buttons {
+                gap: 6px;
+            }
+            .lh-btn {
+                padding: 6px 10px;
+                font-size: 0.75rem;
+            }
+            .lh-btn .dot {
+                width: 8px;
+                height: 8px;
+            }
+            .main-container {
+                flex-direction: column;
+                margin-top: 130px;
+                height: calc(100vh - 130px);
+            }
+            .sidebar {
+                width: 100%;
+                min-width: 100%;
+                max-height: 50vh;
+                border-right: none;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            .sidebar.collapsed {
+                margin-left: 0;
+                margin-top: -50vh;
+            }
+            .preview-panel {
+                flex: 1;
+                min-height: 50vh;
+            }
+            .preview-bar {
+                flex-wrap: wrap;
+                gap: 8px;
+                padding: 8px 12px;
+            }
+            .preview-bar-left {
+                width: 100%;
+                justify-content: space-between;
+            }
+            .print-btn {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+            .preview-controls {
+                flex-wrap: wrap;
+                gap: 12px;
+                padding: 8px 12px;
+            }
+            .zoom-control {
+                width: 100%;
+                justify-content: center;
+            }
+            .zoom-presets {
+                display: none;
+            }
+            .page-thumbnails {
+                display: none !important;
+            }
+            .editor-toolbar {
+                gap: 2px;
+                padding: 6px;
+            }
+            .toolbar-btn {
+                width: 28px;
+                height: 28px;
+                font-size: 0.8rem;
+            }
+            .toolbar-select {
+                padding: 4px 6px;
+                font-size: 0.75rem;
+            }
+            .editor-content {
+                min-height: 150px;
+                max-height: 200px;
+            }
+            .page {
+                width: 100%;
+                max-width: 580px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-logo {
+                height: 32px;
+            }
+            .header-text h1 {
+                font-size: 0.95rem;
+            }
+            .lh-btn span:not(.dot) {
+                display: none;
+            }
+            .lh-btn {
+                padding: 8px;
+            }
+            .sidebar-section {
+                padding: 10px;
+            }
+            .quick-buttons {
+                gap: 4px;
+            }
+            .quick-btn {
+                padding: 6px 8px;
+                font-size: 0.7rem;
+            }
+            .editor-toolbar-row2 {
+                display: none;
+            }
+            .preview-area {
+                padding: 15px;
+            }
+        }
+
+        /* Focus visible for keyboard navigation */
+        .toolbar-btn:focus-visible,
+        .quick-btn:focus-visible,
+        .lh-btn:focus-visible,
+        .print-btn:focus-visible,
+        button:focus-visible {
+            outline: 2px solid #4fc3f7;
+            outline-offset: 2px;
+        }
+
+        /* Skip to main content link for accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #1a2540;
+            color: white;
+            padding: 8px 16px;
+            z-index: 10000;
+            text-decoration: none;
+            border-radius: 0 0 4px 0;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
     </style>
 </head>
 <body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#editor" class="skip-link">Skip to editor</a>
+
+    <!-- Print Preview Exit Button -->
+    <button class="print-preview-exit" onclick="togglePrintPreview()">Exit Preview (Esc)</button>
+
+    <!-- Print Preview Controls -->
+    <div class="print-preview-controls">
+        <button class="print-btn" onclick="window.print()">Print</button>
+        <button class="print-btn" onclick="downloadPDF()">Download PDF</button>
+    </div>
+
     <!-- Header -->
-    <header class="header">
+    <header class="header" role="banner">
         <div class="header-left">
             <img src="data:image/png;base64,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" alt="Fountain Logo" class="header-logo">
             <div class="header-text">
@@ -1233,20 +1591,21 @@
             <span class="autosave-indicator" id="autosaveIndicator"></span>
         </div>
         <div class="header-actions">
-            <button class="header-icon-btn" onclick="toggleShortcutsModal()" title="Keyboard Shortcuts">⌨</button>
-            <button class="header-icon-btn" id="darkModeBtn" onclick="toggleDarkMode()" title="Toggle Dark Mode">🌙</button>
+            <button class="header-icon-btn" onclick="toggleRecentDocsModal()" title="Recent Documents" aria-label="Recent Documents">📋</button>
+            <button class="header-icon-btn" onclick="toggleShortcutsModal()" title="Keyboard Shortcuts" aria-label="Keyboard Shortcuts">⌨</button>
+            <button class="header-icon-btn" id="darkModeBtn" onclick="toggleDarkMode()" title="Toggle Dark Mode" aria-label="Toggle Dark Mode">🌙</button>
         </div>
-        <div class="letterhead-buttons">
-            <button class="lh-btn trt active" onclick="selectLetterhead(1)">
-                <span class="dot"></span>
+        <div class="letterhead-buttons" role="group" aria-label="Letterhead Selection">
+            <button class="lh-btn trt active" onclick="selectLetterhead(1)" aria-pressed="true" aria-label="Select Fountain TRT Letterhead">
+                <span class="dot" aria-hidden="true"></span>
                 Fountain TRT
             </button>
-            <button class="lh-btn hrt" onclick="selectLetterhead(2)">
-                <span class="dot"></span>
+            <button class="lh-btn hrt" onclick="selectLetterhead(2)" aria-pressed="false" aria-label="Select Fountain HRT Letterhead">
+                <span class="dot" aria-hidden="true"></span>
                 Fountain HRT
             </button>
-            <button class="lh-btn none" onclick="selectLetterhead(0)">
-                <span class="dot"></span>
+            <button class="lh-btn none" onclick="selectLetterhead(0)" aria-pressed="false" aria-label="No Letterhead">
+                <span class="dot" aria-hidden="true"></span>
                 No Letterhead
             </button>
         </div>
@@ -1340,8 +1699,9 @@
                     <button class="toolbar-btn" onclick="execCmd('removeFormat')" title="Clear Formatting">⌀</button>
                     <button class="toolbar-btn" onclick="toggleCase()" title="Toggle Case">Aa</button>
                     <div class="toolbar-divider"></div>
-                    <button class="toolbar-btn" onclick="toggleSymbolPicker()" title="Insert Symbol">Ω</button>
-                    <button class="toolbar-btn" onclick="openTableModal()" title="Insert Table">⊞</button>
+                    <button class="toolbar-btn" onclick="toggleSymbolPicker()" title="Insert Symbol" aria-label="Insert Symbol">Ω</button>
+                    <button class="toolbar-btn" onclick="openTableModal()" title="Insert Table" aria-label="Insert Table">⊞</button>
+                    <button class="toolbar-btn" onclick="openImageModal()" title="Insert Image" aria-label="Insert Image">🖼</button>
                     <div class="toolbar-divider"></div>
                     <button class="toolbar-btn" onclick="toggleFullscreen()" title="Fullscreen Editor">⛶</button>
                     <button class="toolbar-btn" onclick="toggleSideBySide()" title="Side-by-Side View">◫</button>
@@ -1377,8 +1737,10 @@
                     <span class="page-count-badge" id="pageCountBadge">1 Page</span>
                     <button class="view-toggle-btn" onclick="toggleThumbnails()">📑 Thumbnails</button>
                 </div>
-                <button class="print-btn" onclick="downloadPDF()">📥 Download PDF</button>
-                <button class="print-btn" onclick="window.print()">🖨 Print</button>
+                <button class="print-btn" onclick="downloadPDF()" aria-label="Download as PDF">📥 PDF</button>
+                <button class="print-btn" onclick="downloadDOCX()" aria-label="Download as DOCX">📄 DOCX</button>
+                <button class="print-btn" onclick="togglePrintPreview()" aria-label="Print Preview">👁 Preview</button>
+                <button class="print-btn" onclick="window.print()" aria-label="Print Document">🖨 Print</button>
             </div>
             <div class="preview-controls">
                 <div class="zoom-control">
@@ -1581,6 +1943,8 @@ ${editor.innerHTML}
                 <div class="shortcut-item"><span>Find</span><span class="shortcut-key">Ctrl+F</span></div>
                 <div class="shortcut-item"><span>Save Draft</span><span class="shortcut-key">Ctrl+S</span></div>
                 <div class="shortcut-item"><span>Print</span><span class="shortcut-key">Ctrl+P</span></div>
+                <div class="shortcut-item"><span>Export PDF</span><span class="shortcut-key">Ctrl+Shift+E</span></div>
+                <div class="shortcut-item"><span>Exit Preview</span><span class="shortcut-key">Esc</span></div>
             </div>
         </div>
     </div>
@@ -1650,6 +2014,39 @@ ${editor.innerHTML}
             </div>
             <div class="table-preview" id="tablePreview"></div>
             <button class="replace-all-btn" onclick="insertTable()" style="width:100%">Insert Table</button>
+        </div>
+    </div>
+
+    <!-- Image Insert Modal -->
+    <div class="modal-overlay" id="imageModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeImageModal()">&times;</button>
+            <h2>Insert Image</h2>
+            <div class="image-upload-zone" id="imageUploadZone" onclick="document.getElementById('imageFileInput').click()">
+                <div class="icon">🖼</div>
+                <p>Click or drag to upload image</p>
+                <p class="formats">PNG, JPG, GIF, WebP</p>
+            </div>
+            <input type="file" id="imageFileInput" accept="image/*" style="display:none" onchange="handleImageUpload(event)">
+            <div class="image-preview-container" id="imagePreviewContainer" style="display:none;">
+                <img id="imagePreview" src="" alt="Preview">
+            </div>
+            <div class="image-size-controls">
+                <label>Width (px): <input type="number" id="imageWidth" value="200" min="20" max="500"></label>
+                <label>Height (px): <input type="number" id="imageHeight" value="auto" min="20" max="500" placeholder="auto"></label>
+            </div>
+            <button class="replace-all-btn" onclick="insertImage()" style="width:100%" id="insertImageBtn" disabled>Insert Image</button>
+        </div>
+    </div>
+
+    <!-- Recent Documents Modal -->
+    <div class="modal-overlay" id="recentDocsModal">
+        <div class="modal" style="max-width: 500px;">
+            <button class="modal-close" onclick="closeRecentDocsModal()">&times;</button>
+            <h2>Recent Documents</h2>
+            <div class="recent-docs-list" id="recentDocsList">
+                <p style="color:#999; text-align:center; padding:20px;">No recent documents</p>
+            </div>
         </div>
     </div>
 
@@ -2538,6 +2935,231 @@ ${editor.innerHTML}
         LH[0] = LH_NONE;
         BOUNDS[0] = { top: 0.05, bottom: 0.05, left: 0.06, right: 0.06 };
 
+        // ============================================
+        // NEW FEATURES
+        // ============================================
+
+        // Page leave confirmation
+        let hasUnsavedChanges = false;
+        document.getElementById('editor').addEventListener('input', function() {
+            hasUnsavedChanges = true;
+        });
+        window.addEventListener('beforeunload', function(e) {
+            if (hasUnsavedChanges) {
+                e.preventDefault();
+                e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+                return e.returnValue;
+            }
+        });
+        // Reset flag when saving
+        const originalSaveDraft = saveDraft;
+        saveDraft = function() {
+            originalSaveDraft();
+            hasUnsavedChanges = false;
+        };
+
+        // Keyboard shortcut for PDF export (Ctrl+Shift+E)
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'e') {
+                e.preventDefault();
+                downloadPDF();
+                showToast('PDF download started', 'success');
+            }
+            // Escape key for print preview
+            if (e.key === 'Escape' && document.body.classList.contains('print-preview-mode')) {
+                togglePrintPreview();
+            }
+        });
+
+        // Print Preview Mode
+        function togglePrintPreview() {
+            document.body.classList.toggle('print-preview-mode');
+            if (document.body.classList.contains('print-preview-mode')) {
+                showToast('Print Preview Mode - Press Esc to exit');
+            }
+        }
+
+        // Image Insert Functions
+        let currentImageData = null;
+        function openImageModal() {
+            document.getElementById('imageModal').classList.add('show');
+            currentImageData = null;
+            document.getElementById('imagePreviewContainer').style.display = 'none';
+            document.getElementById('insertImageBtn').disabled = true;
+        }
+        function closeImageModal() {
+            document.getElementById('imageModal').classList.remove('show');
+            currentImageData = null;
+        }
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    currentImageData = e.target.result;
+                    document.getElementById('imagePreview').src = currentImageData;
+                    document.getElementById('imagePreviewContainer').style.display = 'block';
+                    document.getElementById('insertImageBtn').disabled = false;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        function insertImage() {
+            if (!currentImageData) return;
+            const width = document.getElementById('imageWidth').value || 200;
+            const heightVal = document.getElementById('imageHeight').value;
+            const height = heightVal && heightVal !== 'auto' ? heightVal + 'px' : 'auto';
+            const imgHtml = '<img src="' + currentImageData + '" style="max-width:100%; width:' + width + 'px; height:' + height + ';" alt="Inserted image">';
+            insertAtCursor(imgHtml);
+            closeImageModal();
+            showToast('Image inserted');
+        }
+        // Image drag and drop
+        document.getElementById('imageUploadZone')?.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.style.borderColor = '#4fc3f7';
+            this.style.background = '#e3f7fd';
+        });
+        document.getElementById('imageUploadZone')?.addEventListener('dragleave', function(e) {
+            this.style.borderColor = '#ccc';
+            this.style.background = '';
+        });
+        document.getElementById('imageUploadZone')?.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.style.borderColor = '#ccc';
+            this.style.background = '';
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    currentImageData = ev.target.result;
+                    document.getElementById('imagePreview').src = currentImageData;
+                    document.getElementById('imagePreviewContainer').style.display = 'block';
+                    document.getElementById('insertImageBtn').disabled = false;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Recent Documents Functions
+        function getRecentDocs() {
+            const docs = localStorage.getItem('letterhead_recent_docs');
+            return docs ? JSON.parse(docs) : [];
+        }
+        function saveToRecentDocs(name, content, letterhead) {
+            const docs = getRecentDocs();
+            const newDoc = {
+                id: Date.now(),
+                name: name || 'Untitled Document',
+                content: content,
+                letterhead: letterhead,
+                savedAt: new Date().toISOString(),
+                wordCount: content.trim().split(/\s+/).filter(w => w.length > 0).length
+            };
+            // Remove existing doc with same name
+            const filtered = docs.filter(d => d.name !== name);
+            filtered.unshift(newDoc);
+            // Keep only last 10 documents
+            const limited = filtered.slice(0, 10);
+            localStorage.setItem('letterhead_recent_docs', JSON.stringify(limited));
+        }
+        function toggleRecentDocsModal() {
+            const modal = document.getElementById('recentDocsModal');
+            modal.classList.toggle('show');
+            if (modal.classList.contains('show')) {
+                renderRecentDocs();
+            }
+        }
+        function closeRecentDocsModal() {
+            document.getElementById('recentDocsModal').classList.remove('show');
+        }
+        function renderRecentDocs() {
+            const docs = getRecentDocs();
+            const container = document.getElementById('recentDocsList');
+            if (docs.length === 0) {
+                container.innerHTML = '<p style="color:#999; text-align:center; padding:20px;">No recent documents</p>';
+                return;
+            }
+            container.innerHTML = docs.map(doc => {
+                const date = new Date(doc.savedAt);
+                const dateStr = date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                return '<div class="recent-doc-item" onclick="loadRecentDoc(' + doc.id + ')">' +
+                    '<div class="recent-doc-info">' +
+                    '<div class="recent-doc-title">' + escapeHtml(doc.name) + '</div>' +
+                    '<div class="recent-doc-meta">' + dateStr + ' · ' + doc.wordCount + ' words</div>' +
+                    '</div>' +
+                    '<div class="recent-doc-actions">' +
+                    '<button class="recent-doc-btn delete" onclick="event.stopPropagation(); deleteRecentDoc(' + doc.id + ')">Delete</button>' +
+                    '</div>' +
+                    '</div>';
+            }).join('');
+        }
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        function loadRecentDoc(id) {
+            const docs = getRecentDocs();
+            const doc = docs.find(d => d.id === id);
+            if (doc) {
+                document.getElementById('editor').innerHTML = doc.content;
+                if (doc.letterhead !== undefined) {
+                    selectLetterhead(doc.letterhead);
+                }
+                updatePreview();
+                updateWordCount();
+                closeRecentDocsModal();
+                showToast('Document loaded');
+                hasUnsavedChanges = false;
+            }
+        }
+        function deleteRecentDoc(id) {
+            const docs = getRecentDocs().filter(d => d.id !== id);
+            localStorage.setItem('letterhead_recent_docs', JSON.stringify(docs));
+            renderRecentDocs();
+            showToast('Document deleted');
+        }
+        // Override saveDraft to also save to recent docs
+        const originalSaveDraftForRecent = saveDraft;
+        saveDraft = function() {
+            originalSaveDraftForRecent();
+            const content = document.getElementById('editor').innerHTML;
+            const name = 'Draft ' + new Date().toLocaleDateString();
+            saveToRecentDocs(name, content, currentLH);
+        };
+
+        // DOCX Export Function
+        function downloadDOCX() {
+            const editor = document.getElementById('editor');
+            const content = editor.innerHTML;
+
+            // Create a simple DOCX-compatible HTML wrapper
+            const docxContent = '<!DOCTYPE html><html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"><title>Document</title><!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]--><style>body { font-family: Arial, sans-serif; font-size: 11pt; line-height: 1.5; } p { margin: 0 0 12pt 0; } table { border-collapse: collapse; } td, th { border: 1px solid #000; padding: 8px; }</style></head><body>' + content + '</body></html>';
+
+            const blob = new Blob([docxContent], { type: 'application/vnd.ms-word;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'letterhead-document.doc';
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('DOCX download started', 'success');
+        }
+
+        // Update selectLetterhead to update ARIA attributes
+        const originalSelectLetterheadAria = selectLetterhead;
+        selectLetterhead = function(num) {
+            originalSelectLetterheadAria(num);
+            // Update aria-pressed attributes
+            document.querySelectorAll('.lh-btn').forEach(btn => {
+                btn.setAttribute('aria-pressed', 'false');
+            });
+            const activeBtn = document.querySelector('.lh-btn.active');
+            if (activeBtn) {
+                activeBtn.setAttribute('aria-pressed', 'true');
+            }
+        };
 
         // Initialize on load
         window.addEventListener('load', () => {
@@ -2545,6 +3167,17 @@ ${editor.innerHTML}
             updateWordCount();
             initDarkMode();
             loadAutoSave();
+
+            // Register service worker for offline support
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registered:', registration.scope);
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker registration failed:', err);
+                    });
+            }
         });
     </script>
 </body>
