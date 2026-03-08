@@ -1219,15 +1219,15 @@
         }
 
         .continuation-footer .footer-icon {
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
-            background: #1a2540;
+            background: #e91e8c;
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 10px;
+            font-size: 11px;
         }
 
         .continuation-footer .footer-text {
@@ -1971,6 +1971,13 @@ ${editor.innerHTML}
                     const footer = document.createElement('div');
                     footer.className = 'continuation-footer';
                     footer.innerHTML = `
+                        <div class="footer-item">
+                            <div class="footer-icon">&#128222;</div>
+                            <div class="footer-text">
+                                <span class="footer-label">Call</span>
+                                <span>(213) 237-1454</span>
+                            </div>
+                        </div>
                         <div class="footer-item">
                             <div class="footer-icon">&#127760;</div>
                             <div class="footer-text">
