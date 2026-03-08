@@ -1866,8 +1866,13 @@ ${editor.innerHTML}
             // Normalize: wrap bare text nodes in paragraphs
             const normalized = normalizeContent(tempDiv);
 
+            // Width for pages 2+ (plain white pages with 40px margins on each side)
+            const contentWidthPage2Plus = pageWidth - 80;
+            // Use the smaller width to ensure content fits on all pages
+            const paginationWidth = Math.min(contentWidth, contentWidthPage2Plus);
+
             // Paginate content by measuring each element (different heights for page 1 vs 2+)
-            const pages = paginateContent(normalized, contentWidth, contentHeightPage1, contentHeightPage2Plus);
+            const pages = paginateContent(normalized, paginationWidth, contentHeightPage1, contentHeightPage2Plus);
 
             // Create pages
             pages.forEach((pageContent, i) => {
@@ -1894,13 +1899,16 @@ ${editor.innerHTML}
                 // Content - page 1 has header+footer margins, pages 2+ have small margins only
                 const contentDiv = document.createElement('div');
                 const pageContentTop = (i === 0) ? contentTop : 40; // 40px top margin for pages 2+
+                const pageContentLeft = (i === 0) ? contentLeft : 40; // 40px left margin for pages 2+
+                const pageContentRight = (i === 0) ? contentRight : 40; // 40px right margin for pages 2+
+                const pageContentWidth = (i === 0) ? contentWidth : (pageWidth - 80); // Full width minus margins for pages 2+
                 const pageContentHeight = (i === 0) ? contentHeightPage1 : (pageHeight - 60); // More space on pages 2+
 
                 contentDiv.className = 'page-content';
                 contentDiv.style.cssText = `
                     top: ${pageContentTop}px;
-                    left: ${contentLeft}px;
-                    width: ${contentWidth}px;
+                    left: ${pageContentLeft}px;
+                    width: ${pageContentWidth}px;
                     height: ${pageContentHeight}px;
                     overflow: hidden;
                 `;
