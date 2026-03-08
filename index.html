@@ -526,8 +526,13 @@
                 margin: 0;
             }
 
-            body {
-                background: white;
+            html, body {
+                margin: 0 !important;
+                padding: 0 !important;
+                background: white !important;
+                width: auto !important;
+                height: auto !important;
+                overflow: visible !important;
             }
 
             .header, .sidebar, .preview-bar, .preview-controls {
@@ -535,55 +540,82 @@
             }
 
             .main-container {
-                margin-top: 0;
-                height: auto;
+                display: block !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                height: auto !important;
+                width: auto !important;
+                overflow: visible !important;
             }
 
             .preview-panel {
-                background: white;
+                display: block !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: white !important;
+                overflow: visible !important;
+                height: auto !important;
+                width: auto !important;
             }
 
             .preview-area {
-                padding: 0;
-                gap: 0;
+                display: block !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                gap: 0 !important;
+                overflow: visible !important;
+                height: auto !important;
+                width: auto !important;
             }
 
-            /* Container: A4-sized box for each page */
             .page-wrapper {
                 width: 210mm !important;
                 height: 297mm !important;
                 overflow: hidden !important;
                 page-break-after: always !important;
                 page-break-inside: avoid !important;
+                break-after: page !important;
+                break-inside: avoid !important;
                 position: relative !important;
+                margin: 0 !important;
+                padding: 0 !important;
                 transform: none !important;
+                display: block !important;
             }
 
-            /* KEY FIX: Keep page at 580x820 (matching all inline pixel styles)
-               and scale it up to fill the A4 wrapper */
+            .page-wrapper:last-child {
+                page-break-after: auto !important;
+                break-after: auto !important;
+            }
+
             .page {
                 width: 580px !important;
                 height: 820px !important;
                 box-shadow: none !important;
                 position: relative !important;
+                margin: 0 !important;
+                padding: 0 !important;
                 transform: scale(1.3685) !important;
                 transform-origin: top left !important;
+                overflow: hidden !important;
             }
 
-            /* Ensure backgrounds print */
             .page-bg {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
+                color-adjust: exact !important;
             }
 
             .continuation-footer-bg {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
+                color-adjust: exact !important;
             }
 
             .draft-watermark {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
+                color-adjust: exact !important;
             }
         }
 
