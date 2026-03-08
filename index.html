@@ -662,12 +662,8 @@
                 <h3>Provider Signature</h3>
                 <div class="provider-row">
                     <select class="provider-select" id="providerSelect">
-                        <option value="">Select Provider...</option>
-                        <option value="dr-smith">Dr. Sarah Smith, MD</option>
-                        <option value="dr-johnson">Dr. Michael Johnson, DO</option>
-                        <option value="np-williams">Jessica Williams, NP</option>
-                        <option value="pa-brown">Robert Brown, PA-C</option>
-                        <option value="dr-davis">Dr. Emily Davis, MD</option>
+                        <option value="">Select Staff...</option>
+                        <option value="daniel-raphael">Daniel Raphael, Clinical Operations Manager</option>
                     </select>
                     <button class="insert-provider-btn" onclick="insertProvider()">Insert</button>
                 </div>
@@ -771,13 +767,9 @@
         let currentZoom = 100;
         let showDraft = false;
 
-        // Provider data
+        // Staff data
         const providers = {
-            'dr-smith': { name: 'Sarah Smith, MD', title: 'Medical Director', npi: '1234567890' },
-            'dr-johnson': { name: 'Michael Johnson, DO', title: 'Physician', npi: '2345678901' },
-            'np-williams': { name: 'Jessica Williams, NP', title: 'Nurse Practitioner', npi: '3456789012' },
-            'pa-brown': { name: 'Robert Brown, PA-C', title: 'Physician Assistant', npi: '4567890123' },
-            'dr-davis': { name: 'Emily Davis, MD', title: 'Endocrinologist', npi: '5678901234' }
+            'daniel-raphael': { name: 'Daniel Raphael', title: 'Clinical Operations Manager', npi: null }
         };
 
         // Generate letterhead images on load
@@ -995,20 +987,24 @@
             `);
         }
 
-        // Insert provider signature
+        // Insert staff signature
         function insertProvider() {
             const select = document.getElementById('providerSelect');
             const key = select.value;
             if (!key) return;
 
-            const provider = providers[key];
-            insertAtCursor(`
+            const staff = providers[key];
+            let signatureHtml = `
                 <p style="margin-top: 24px;">Sincerely,</p>
-                <p style="margin-top: 40px; margin-bottom: 4px;"><strong>${provider.name}</strong></p>
-                <p style="margin-bottom: 4px;">${provider.title}</p>
-                <p style="margin-bottom: 4px;">Fountain Vitality</p>
-                <p style="font-size: 10px; color: #666;">NPI: ${provider.npi}</p>
-            `);
+                <p style="margin-top: 40px; margin-bottom: 4px;"><strong>${staff.name}</strong></p>
+                <p style="margin-bottom: 4px;">${staff.title}</p>
+                <p style="margin-bottom: 4px;">Fountain Vitality</p>`;
+
+            if (staff.npi) {
+                signatureHtml += `<p style="font-size: 10px; color: #666;">NPI: ${staff.npi}</p>`;
+            }
+
+            insertAtCursor(signatureHtml);
         }
 
         // Insert HTML at cursor
@@ -1138,11 +1134,10 @@ ${editor.innerHTML}
             }
         }
 
-        // Update preview with pagination
+        // Update preview with proper pagination (no text cutting)
         function updatePreview() {
             const editor = document.getElementById('editor');
             const previewArea = document.getElementById('previewArea');
-            const content = editor.innerHTML;
             const bounds = BOUNDS[currentLH];
 
             // Calculate content area dimensions
@@ -1158,29 +1153,18 @@ ${editor.innerHTML}
             // Clear preview
             previewArea.innerHTML = '';
 
-            // Create a hidden measuring div
-            const measureDiv = document.createElement('div');
-            measureDiv.style.cssText = `
-                position: absolute;
-                visibility: hidden;
-                width: ${contentWidth}px;
-                font-family: Arial, sans-serif;
-                font-size: 11px;
-                line-height: 1.5;
-                word-wrap: break-word;
-            `;
-            measureDiv.innerHTML = content;
-            document.body.appendChild(measureDiv);
+            // Get content elements - wrap text nodes and normalize
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = editor.innerHTML;
 
-            // Get total content height
-            const totalHeight = measureDiv.scrollHeight;
-            document.body.removeChild(measureDiv);
+            // Normalize: wrap bare text nodes in paragraphs
+            const normalized = normalizeContent(tempDiv);
 
-            // Calculate number of pages needed
-            const numPages = Math.max(1, Math.ceil(totalHeight / contentHeight));
+            // Paginate content by measuring each element
+            const pages = paginateContent(normalized, contentWidth, contentHeight);
 
             // Create pages
-            for (let i = 0; i < numPages; i++) {
+            pages.forEach((pageContent, i) => {
                 const wrapper = document.createElement('div');
                 wrapper.className = 'page-wrapper';
                 wrapper.style.transform = `scale(${currentZoom / 100})`;
@@ -1202,15 +1186,12 @@ ${editor.innerHTML}
                     left: ${contentLeft}px;
                     width: ${contentWidth}px;
                     height: ${contentHeight}px;
+                    overflow: hidden;
                 `;
 
-                // Clone content and position it
+                // Add the paginated content
                 const innerContent = document.createElement('div');
-                innerContent.innerHTML = content;
-                innerContent.style.cssText = `
-                    position: relative;
-                    top: ${-i * contentHeight}px;
-                `;
+                innerContent.innerHTML = pageContent;
                 contentDiv.appendChild(innerContent);
                 page.appendChild(contentDiv);
 
@@ -1222,11 +1203,208 @@ ${editor.innerHTML}
 
                 wrapper.appendChild(page);
                 previewArea.appendChild(wrapper);
-            }
+            });
 
             // Update page count badge
+            const numPages = pages.length;
             document.getElementById('pageCountBadge').textContent =
                 numPages === 1 ? '1 Page' : `${numPages} Pages`;
+        }
+
+        // Normalize content: ensure all content is wrapped in block elements
+        function normalizeContent(container) {
+            const result = [];
+            const childNodes = Array.from(container.childNodes);
+
+            let textBuffer = '';
+
+            childNodes.forEach(node => {
+                if (node.nodeType === Node.TEXT_NODE) {
+                    const text = node.textContent;
+                    if (text.trim()) {
+                        textBuffer += text;
+                    }
+                } else if (node.nodeType === Node.ELEMENT_NODE) {
+                    // Flush text buffer
+                    if (textBuffer.trim()) {
+                        result.push(`<p>${textBuffer}</p>`);
+                        textBuffer = '';
+                    }
+
+                    const tagName = node.tagName.toLowerCase();
+                    const blockElements = ['p', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'blockquote', 'table', 'tr', 'pre'];
+
+                    if (blockElements.includes(tagName)) {
+                        result.push(node.outerHTML);
+                    } else {
+                        // Inline element - wrap in paragraph
+                        result.push(`<p>${node.outerHTML}</p>`);
+                    }
+                }
+            });
+
+            // Flush remaining text
+            if (textBuffer.trim()) {
+                result.push(`<p>${textBuffer}</p>`);
+            }
+
+            // If no content, return empty paragraph
+            if (result.length === 0) {
+                result.push('<p></p>');
+            }
+
+            return result;
+        }
+
+        // Paginate content by measuring elements
+        function paginateContent(elements, maxWidth, maxHeight) {
+            const pages = [];
+            let currentPageContent = [];
+            let currentHeight = 0;
+
+            // Create hidden measuring container
+            const measureContainer = document.createElement('div');
+            measureContainer.style.cssText = `
+                position: absolute;
+                visibility: hidden;
+                width: ${maxWidth}px;
+                font-family: Arial, sans-serif;
+                font-size: 11px;
+                line-height: 1.5;
+                word-wrap: break-word;
+            `;
+            document.body.appendChild(measureContainer);
+
+            elements.forEach(htmlString => {
+                // Measure this element
+                measureContainer.innerHTML = htmlString;
+                const elementHeight = measureContainer.offsetHeight;
+
+                // Check if element fits on current page
+                if (currentHeight + elementHeight <= maxHeight) {
+                    currentPageContent.push(htmlString);
+                    currentHeight += elementHeight;
+                } else {
+                    // Element doesn't fit - check if it's too tall for any single page
+                    if (elementHeight > maxHeight) {
+                        // Large element - need to split it
+                        const splitParts = splitLargeElement(htmlString, maxWidth, maxHeight, currentHeight, measureContainer);
+
+                        splitParts.forEach((part, index) => {
+                            if (index === 0 && currentPageContent.length > 0) {
+                                // First part goes on current page if there's room
+                                currentPageContent.push(part.html);
+                                if (part.startsNewPage || index < splitParts.length - 1) {
+                                    pages.push(currentPageContent.join(''));
+                                    currentPageContent = [];
+                                    currentHeight = 0;
+                                } else {
+                                    currentHeight += part.height;
+                                }
+                            } else if (part.startsNewPage) {
+                                if (currentPageContent.length > 0) {
+                                    pages.push(currentPageContent.join(''));
+                                }
+                                currentPageContent = [part.html];
+                                currentHeight = part.height;
+                            } else {
+                                currentPageContent.push(part.html);
+                                currentHeight = part.height;
+                            }
+                        });
+                    } else {
+                        // Normal element - start new page
+                        if (currentPageContent.length > 0) {
+                            pages.push(currentPageContent.join(''));
+                        }
+                        currentPageContent = [htmlString];
+                        currentHeight = elementHeight;
+                    }
+                }
+            });
+
+            // Add remaining content
+            if (currentPageContent.length > 0) {
+                pages.push(currentPageContent.join(''));
+            }
+
+            document.body.removeChild(measureContainer);
+
+            // Ensure at least one page
+            if (pages.length === 0) {
+                pages.push('');
+            }
+
+            return pages;
+        }
+
+        // Split large elements (paragraphs with lots of text) across pages
+        function splitLargeElement(htmlString, maxWidth, maxHeight, usedHeight, measureContainer) {
+            const parts = [];
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = htmlString;
+            const element = tempDiv.firstElementChild;
+
+            if (!element) {
+                return [{ html: htmlString, height: 0, startsNewPage: false }];
+            }
+
+            const tagName = element.tagName.toLowerCase();
+            const style = element.getAttribute('style') || '';
+
+            // Get text content and split into words
+            const text = element.innerHTML;
+            const words = text.split(/(\s+)/);
+
+            let remainingHeight = maxHeight - usedHeight;
+            let currentWords = [];
+            let isFirstPart = true;
+
+            for (let i = 0; i < words.length; i++) {
+                currentWords.push(words[i]);
+
+                // Measure current content
+                const testHtml = `<${tagName} style="${style}">${currentWords.join('')}</${tagName}>`;
+                measureContainer.innerHTML = testHtml;
+                const testHeight = measureContainer.offsetHeight;
+
+                if (testHeight > remainingHeight) {
+                    // Content exceeds available space
+                    if (currentWords.length > 1) {
+                        // Remove last word and save this part
+                        currentWords.pop();
+                        const partHtml = `<${tagName} style="${style}">${currentWords.join('')}</${tagName}>`;
+                        measureContainer.innerHTML = partHtml;
+
+                        parts.push({
+                            html: partHtml,
+                            height: measureContainer.offsetHeight,
+                            startsNewPage: !isFirstPart
+                        });
+
+                        // Start new part with the word we removed
+                        currentWords = [words[i]];
+                        remainingHeight = maxHeight;
+                        isFirstPart = false;
+                    } else {
+                        // Single word too big - just include it
+                        remainingHeight = maxHeight;
+                    }
+                }
+            }
+
+            // Add remaining content
+            if (currentWords.length > 0 && currentWords.some(w => w.trim())) {
+                const partHtml = `<${tagName} style="${style}">${currentWords.join('')}</${tagName}>`;
+                measureContainer.innerHTML = partHtml;
+                parts.push({
+                    html: partHtml,
+                    height: measureContainer.offsetHeight,
+                    startsNewPage: !isFirstPart
+                });
+            }
+
+            return parts.length > 0 ? parts : [{ html: htmlString, height: 0, startsNewPage: false }];
         }
 
         // Initialize on load
