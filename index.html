@@ -1821,7 +1821,7 @@ ${editor.innerHTML}
 
             // Page 1 has both header and footer, pages 2+ have footer too
             const contentHeightPage1 = pageHeight - contentTop - contentBottom;
-            const contentHeightPage2Plus = pageHeight - 100; // 40px top + 60px for footer area
+            const contentHeightPage2Plus = pageHeight - 100; // 40px top + 50px footer + 10px bottom margin
 
             // Clear preview
             previewArea.innerHTML = '';
@@ -1868,8 +1868,8 @@ ${editor.innerHTML}
                 const pageContentTop = (i === 0) ? contentTop : 40; // 40px top margin for pages 2+
                 const pageContentLeft = (i === 0) ? contentLeft : 40; // 40px left margin for pages 2+
                 const pageContentRight = (i === 0) ? contentRight : 40; // 40px right margin for pages 2+
-                const pageContentWidth = (i === 0) ? contentWidth : (pageWidth - 80); // Full width minus margins for pages 2+
-                const pageContentHeight = (i === 0) ? contentHeightPage1 : (pageHeight - 60); // More space on pages 2+
+                const pageContentWidth = paginationWidth; // Use same width as pagination for all pages
+                const pageContentHeight = (i === 0) ? contentHeightPage1 : contentHeightPage2Plus; // Must match pagination height
 
                 contentDiv.className = 'page-content';
                 contentDiv.style.cssText = `
@@ -2048,7 +2048,7 @@ ${editor.innerHTML}
                                 currentHeight = part.height;
                             } else {
                                 currentPageContent.push(part.html);
-                                currentHeight = part.height;
+                                currentHeight += part.height; // Accumulate height, don't replace
                             }
                         });
                     } else {
