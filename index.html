@@ -1851,7 +1851,10 @@ ${editor.innerHTML}
             const contentTop = pageHeight * bounds.top;
             const contentBottom = pageHeight * bounds.bottom;
             const contentWidth = pageWidth - contentLeft - contentRight;
-            const contentHeight = pageHeight - contentTop - contentBottom;
+
+            // Page 1 has both header and footer, pages 2+ only have header
+            const contentHeightPage1 = pageHeight - contentTop - contentBottom;
+            const contentHeightPage2Plus = pageHeight - contentTop - 20; // Just small bottom margin
 
             // Clear preview
             previewArea.innerHTML = '';
@@ -1863,8 +1866,8 @@ ${editor.innerHTML}
             // Normalize: wrap bare text nodes in paragraphs
             const normalized = normalizeContent(tempDiv);
 
-            // Paginate content by measuring each element
-            const pages = paginateContent(normalized, contentWidth, contentHeight);
+            // Paginate content by measuring each element (different heights for page 1 vs 2+)
+            const pages = paginateContent(normalized, contentWidth, contentHeightPage1, contentHeightPage2Plus);
 
             // Create pages
             pages.forEach((pageContent, i) => {
@@ -1875,20 +1878,33 @@ ${editor.innerHTML}
                 const page = document.createElement('div');
                 page.className = 'page';
 
-                // Background
+                // Background - full letterhead for page 1, header-only for subsequent pages
                 const bg = document.createElement('div');
                 bg.className = 'page-bg';
-                bg.style.backgroundImage = `url(${LH[currentLH]})`;
+
+                if (i === 0) {
+                    // First page: full letterhead with header and footer
+                    bg.style.backgroundImage = `url(${LH[currentLH]})`;
+                } else {
+                    // Subsequent pages: only show header portion, no footer
+                    bg.style.backgroundImage = `url(${LH[currentLH]})`;
+                    bg.style.backgroundSize = '100% auto';
+                    bg.style.backgroundPosition = 'top center';
+                    bg.style.backgroundRepeat = 'no-repeat';
+                }
                 page.appendChild(bg);
 
-                // Content
+                // Content - adjust position for subsequent pages (no footer to avoid)
                 const contentDiv = document.createElement('div');
+                const pageContentTop = contentTop;
+                const pageContentHeight = (i === 0) ? contentHeightPage1 : contentHeightPage2Plus;
+
                 contentDiv.className = 'page-content';
                 contentDiv.style.cssText = `
-                    top: ${contentTop}px;
+                    top: ${pageContentTop}px;
                     left: ${contentLeft}px;
                     width: ${contentWidth}px;
-                    height: ${contentHeight}px;
+                    height: ${pageContentHeight}px;
                     overflow: hidden;
                 `;
 
@@ -1971,10 +1987,15 @@ ${editor.innerHTML}
         }
 
         // Paginate content by measuring elements
-        function paginateContent(elements, maxWidth, maxHeight) {
+        function paginateContent(elements, maxWidth, maxHeightPage1, maxHeightPage2Plus) {
             const pages = [];
             let currentPageContent = [];
             let currentHeight = 0;
+
+            // Get max height for current page (page 1 is smaller due to footer)
+            function getMaxHeight() {
+                return pages.length === 0 ? maxHeightPage1 : maxHeightPage2Plus;
+            }
 
             // Create hidden measuring container
             const measureContainer = document.createElement('div');
@@ -1993,6 +2014,7 @@ ${editor.innerHTML}
                 // Measure this element
                 measureContainer.innerHTML = htmlString;
                 const elementHeight = measureContainer.offsetHeight;
+                const maxHeight = getMaxHeight();
 
                 // Check if element fits on current page
                 if (currentHeight + elementHeight <= maxHeight) {
