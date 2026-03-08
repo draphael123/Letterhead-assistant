@@ -1852,9 +1852,9 @@ ${editor.innerHTML}
             const contentBottom = pageHeight * bounds.bottom;
             const contentWidth = pageWidth - contentLeft - contentRight;
 
-            // Page 1 has both header and footer, pages 2+ only have header
+            // Page 1 has both header and footer, pages 2+ are plain with small margins
             const contentHeightPage1 = pageHeight - contentTop - contentBottom;
-            const contentHeightPage2Plus = pageHeight - contentTop - 20; // Just small bottom margin
+            const contentHeightPage2Plus = pageHeight - 60; // 40px top + 20px bottom margins
 
             // Clear preview
             previewArea.innerHTML = '';
@@ -1878,7 +1878,7 @@ ${editor.innerHTML}
                 const page = document.createElement('div');
                 page.className = 'page';
 
-                // Background - full letterhead for page 1, header-only for subsequent pages
+                // Background - full letterhead for page 1, plain white for subsequent pages
                 const bg = document.createElement('div');
                 bg.className = 'page-bg';
 
@@ -1886,18 +1886,15 @@ ${editor.innerHTML}
                     // First page: full letterhead with header and footer
                     bg.style.backgroundImage = `url(${LH[currentLH]})`;
                 } else {
-                    // Subsequent pages: only show header portion, no footer
-                    bg.style.backgroundImage = `url(${LH[currentLH]})`;
-                    bg.style.backgroundSize = '100% auto';
-                    bg.style.backgroundPosition = 'top center';
-                    bg.style.backgroundRepeat = 'no-repeat';
+                    // Subsequent pages: plain white (standard for continuation pages)
+                    bg.style.background = 'white';
                 }
                 page.appendChild(bg);
 
-                // Content - adjust position for subsequent pages (no footer to avoid)
+                // Content - page 1 has header+footer margins, pages 2+ have small margins only
                 const contentDiv = document.createElement('div');
-                const pageContentTop = contentTop;
-                const pageContentHeight = (i === 0) ? contentHeightPage1 : contentHeightPage2Plus;
+                const pageContentTop = (i === 0) ? contentTop : 40; // 40px top margin for pages 2+
+                const pageContentHeight = (i === 0) ? contentHeightPage1 : (pageHeight - 60); // More space on pages 2+
 
                 contentDiv.className = 'page-content';
                 contentDiv.style.cssText = `
