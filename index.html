@@ -36,13 +36,24 @@
             height: 70px;
         }
 
-        .header-left h1 {
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-logo {
+            height: 42px;
+            width: auto;
+        }
+
+        .header-text h1 {
             font-size: 1.4rem;
             font-weight: 600;
             margin-bottom: 2px;
         }
 
-        .header-left p {
+        .header-text p {
             font-size: 0.8rem;
             opacity: 0.7;
         }
@@ -616,8 +627,11 @@
     <!-- Header -->
     <header class="header">
         <div class="header-left">
-            <h1>Fountain Letterhead Filler</h1>
-            <p>Create professional letterhead documents</p>
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAA2CAYAAACx1wu7AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAe5SURBVGhD7ZhtcFTVGcd/5+5udjfZkJAETMIQCIQQCO/vCIIgCu3UWmDqFFsRW3W09YN1ygcH2qZ1bKudSi2jVFo6sSpCp8VRkAhDKWVKpwg4oOX9TUKyIclu3rPZt3uffkiycO8uZENIR2b4zdwP9znPPfd/n3POc55zlYgItwGa1fBl5Y7QW80dobea20ao6s/0FIlE0XUdALvdjt1us7okTb8IFRGqvbVs+UsFBw4cxuVysmD+TB782kJyc3NQSlkf6RnpBy5d8sqC+1eK3V0idleJ2F1jZEDWZHn8iRfkclWN1T0p+mWO/qn8rxw8eBQR6boM2tsD7Pn7AXZ89A+re1L0i9CDh44RiUYBBerq5fM1cPbcJat7UvSL0KyBmWgqvmuny0l6eprVnBTxvd0CHvr6fTjsDrNRYFjBEGbNnGS2J0m/CF3ywD3MuXsKiqurO92TxoL5s5gze4rJN2msq+tWcfjI5+IZOElsrtHicI+VOfO+JadOXbC6JU3SQoPBkCxc9JhMnbFUVq5aLeV/3iZeb53VLYZhGLL28/did42R/IK5svm97WIYhtUtxpVQSLbV1cvac+fl8RMnZc1580clnfCDwRBTZyznzNnzXTNGyMsbxMpHl/LdVcsZVpCPzWbeedraAkybtYzxpaN479112O12U7suQlUoxNbaOvb6G+gwDBSgKcWY9DReLy6O+fZ6jgqCYCAI3po6Xn5lI99Z+SMqPt5PIBA0+aamunj6qRWsWrksTmS7rrOroZG15y9SUe+jQ9chlncFa/h6KVQ6c6PJInxy6DOeX/0rtr2/m/b2jlibUor7Fs5m+vQJpmdaolE+qPexqcpLZSBAwkHtm9DroODCxUu89MsN7N//CZFItNOsFKVji8jJGRhz7TAM9jU182G9D184BPGaQMQSjl4IVUoxYXwxIwoLcKakJOhdce78F6z7XTnV1bWxKGmahqZ1vsYQ4XQgQEW9nyvBTpEmROGw2ShIdVPodpmabGVlZWUmy3XQNMXIkcOYMWMihYVDaG5po67OHzcbLlddYfiwIUyZXIrNZo5Dk66zy+/nQEMjevyXMsaTztLBOSzKzmJaejpZjqubRtKrvhsRoaWljb37DvLa+rc4cOAIYnnpxAkl7NvzTtx2eby9nVcvVXKuPWCyCzArI4NH8/MoSXXj6BqBa4m39IBSioyMdL6y+B6e/N7DDB8+xOrCiZNnOXHynMkWFeFyR5DKDnNmABjqcvFYfh6laakJRXIzQrtxuZzMnzeduXOnWpuIhKMcOvJfky1gGFSFwkQMkxkF3J+dxXC3C+0GBfVNCwXIzxtMSfEInM4UaxMXLlSa7iMiNEY7s4GVUk8a7utEspsbt/aApmmMLh5BcVEhzpSUq0cMBR0dYZOvLkLIiCJigHSWqHalGOXxMMjhuGE06atQgG88tIiKHX/kxZ/9kPHjRuN2uboEm8dYREA0FOC2KcZ50lk9opB1xUUMd7tNvonos1CA3Nwcnn9uFW+Xv8IjKx4kJ2dgwgOcpiDX6WR5bi5rCoezeGAmHkt9cD2STk+GYXDk0+OIYZCROYC7BueQkeGJE9TS0sabf9hCOBxhzQvPxOy+cITdDY1k2mzcmz2QVMucFKAlEqVRjxLQdVI0jaJrIp200FAozMMrnsPnayD3rhxGF49g0qQSpk+fQMHQfFNyj0QinD7zBeNKR8VsQcOgORoly243pSBDhMpQiFNtAc4GAlQFgzRGIwx1u/hxYWHML2mhwWCIaTOXcfrsRQBsmkZe3mDunjWZpUsfYNHC2WRmDrA+dkMao1H+3dzCv/wNHG8P0Krr6IaOUlCans4bJaNjvknPURHBuKYMi+o6l6tq+Nv7u/jJT3/L7zduobbWb33sulSFQmyuqeUtbw3/aW6hORLGEAOlFAoVt9slLbST+AUS1XXOnL3Ia+vL2fDmZvz+JqtLHN5QmK21dez0+agLBjG681U3SsW9q1dCrQsnhlL4/E28vuEdtu/YSzBRZdRFq67zsb+BPT4/bdFogtKkk2sPhvRGqM1mY9KE0eTmDuoSbH6FiNDU3MqLv3iDquorprZuBDja2spuX1dFnwiBQS4nRZYyL+nF1E0g0MFHFf/k17/ZxLHPTsb+1nWjUKxe/SRla58lJcV8tq+LRCiv9rKz3hcXSRswxuPhqaFDGJ+WhrKMYNIR7SY11c03ly9h08aXWLJ4HnaH+SyEgq1bd9LWZinlRKgKBjna2hZ3HrIrjXtzsnm5uIiJHg+aUnHTrNdCuxlXOorvP/0IJcUjTJ2KCJWXvRz7/JTJPyJCdTBETShsWicKGJnq5on8/BvuUjctVCnFlEljmTd3WtzXI8JhS5nXYRhUhUIY1nACi7KzyLKOjIWbFgqQnZ1JQUF+5xnqWhR4vbUmU0SEFl2PS3AaUOR2k9LfZZ7b7YpbNAChUMR0bwhEjfho2jUNt83Wo5Ce2vtAvKgEo54w1SWiH4UmIpGgRLZ4ep1HrXy4fS9vv/uB6Q8JwFeXzOfZH3w7dt8UjVLhb+DTtlbTPLVrimfy8xnqNCd4K30WqusG4XA47reMw+HAcc1Klq7jiG7xU0phV6rHoe2z0P8XPX3Il4Y7Qm81d4Team4bof8Dm1qkaqi8WzAAAAAASUVORK5CYII=" alt="Fountain Logo" class="header-logo">
+            <div class="header-text">
+                <h1>Fountain Letterhead Filler</h1>
+                <p>Create professional letterhead documents</p>
+            </div>
         </div>
         <div class="letterhead-buttons">
             <button class="lh-btn trt active" onclick="selectLetterhead(1)">
