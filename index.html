@@ -1194,6 +1194,53 @@
             z-index: 5;
         }
 
+        /* Continuation page footer */
+        .continuation-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 3px solid #00bcd4;
+            background: white;
+            font-family: Arial, sans-serif;
+            font-size: 9px;
+            color: #333;
+        }
+
+        .continuation-footer .footer-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .continuation-footer .footer-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #1a2540;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+
+        .continuation-footer .footer-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.3;
+        }
+
+        .continuation-footer .footer-label {
+            font-weight: bold;
+            color: #1a2540;
+        }
+
         /* Header buttons */
         .header-actions {
             display: flex;
@@ -1852,9 +1899,9 @@ ${editor.innerHTML}
             const contentBottom = pageHeight * bounds.bottom;
             const contentWidth = pageWidth - contentLeft - contentRight;
 
-            // Page 1 has both header and footer, pages 2+ are plain with small margins
+            // Page 1 has both header and footer, pages 2+ have footer too
             const contentHeightPage1 = pageHeight - contentTop - contentBottom;
-            const contentHeightPage2Plus = pageHeight - 60; // 40px top + 20px bottom margins
+            const contentHeightPage2Plus = pageHeight - 100; // 40px top + 60px for footer area
 
             // Clear preview
             previewArea.innerHTML = '';
@@ -1918,6 +1965,30 @@ ${editor.innerHTML}
                 innerContent.innerHTML = pageContent;
                 contentDiv.appendChild(innerContent);
                 page.appendChild(contentDiv);
+
+                // Add footer to continuation pages (pages 2+)
+                if (i > 0) {
+                    const footer = document.createElement('div');
+                    footer.className = 'continuation-footer';
+                    footer.innerHTML = `
+                        <div class="footer-item">
+                            <div class="footer-icon">&#127760;</div>
+                            <div class="footer-text">
+                                <span class="footer-label">Message</span>
+                                <span>support@fountain.net</span>
+                            </div>
+                        </div>
+                        <div class="footer-item">
+                            <div class="footer-icon">&#128205;</div>
+                            <div class="footer-text">
+                                <span class="footer-label">Office Address</span>
+                                <span>2064 Park Street,</span>
+                                <span>Jacksonville, FL 32204</span>
+                            </div>
+                        </div>
+                    `;
+                    page.appendChild(footer);
+                }
 
                 // Draft watermark
                 const watermark = document.createElement('div');
