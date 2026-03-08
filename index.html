@@ -621,6 +621,324 @@
             opacity: 0.6;
             pointer-events: none;
         }
+
+        /* Dark Mode */
+        body.dark-mode {
+            background: #1a1a2e;
+        }
+        body.dark-mode .sidebar {
+            background: #16213e;
+            border-color: #1a2540;
+        }
+        body.dark-mode .sidebar-section {
+            border-color: #1a2540;
+        }
+        body.dark-mode .sidebar-section h3 {
+            color: #aaa;
+        }
+        body.dark-mode .upload-zone {
+            background: #1a2540;
+            border-color: #4fc3f7;
+            color: #ccc;
+        }
+        body.dark-mode .upload-zone p {
+            color: #aaa;
+        }
+        body.dark-mode .quick-btn {
+            background: #1a2540;
+            border-color: #2a3550;
+            color: #ccc;
+        }
+        body.dark-mode .quick-btn:hover {
+            background: #2a3550;
+        }
+        body.dark-mode .provider-select,
+        body.dark-mode .toolbar-select {
+            background: #1a2540;
+            border-color: #2a3550;
+            color: #ccc;
+        }
+        body.dark-mode .editor-toolbar {
+            background: #1a2540;
+            border-color: #2a3550;
+        }
+        body.dark-mode .toolbar-btn {
+            background: #16213e;
+            border-color: #2a3550;
+            color: #ccc;
+        }
+        body.dark-mode .toolbar-btn:hover {
+            background: #2a3550;
+        }
+        body.dark-mode .editor-content {
+            background: #0f0f1a;
+            border-color: #2a3550;
+            color: #eee;
+        }
+        body.dark-mode .word-count-bar {
+            background: #1a2540;
+            color: #aaa;
+        }
+        body.dark-mode .preview-panel {
+            background: #0f0f1a;
+        }
+        body.dark-mode .preview-bar {
+            background: #16213e;
+            border-color: #1a2540;
+        }
+        body.dark-mode .preview-label {
+            color: #ccc;
+        }
+        body.dark-mode .preview-controls {
+            background: #1a2540;
+            border-color: #2a3550;
+        }
+        body.dark-mode .zoom-control label,
+        body.dark-mode .draft-control label,
+        body.dark-mode .page-num-control label {
+            color: #aaa;
+        }
+        body.dark-mode .toggle-sidebar-btn {
+            background: #1a2540;
+            border-color: #2a3550;
+            color: #ccc;
+        }
+
+        /* Color Picker */
+        .color-picker-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        .color-picker-btn {
+            width: 32px;
+            height: 32px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+        .color-picker-btn:hover {
+            background: #e8e8e8;
+        }
+        .color-input {
+            position: absolute;
+            width: 0;
+            height: 0;
+            opacity: 0;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.show {
+            display: flex;
+        }
+        .modal {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        body.dark-mode .modal {
+            background: #16213e;
+            color: #ccc;
+        }
+        .modal h2 {
+            margin-bottom: 16px;
+            font-size: 1.2rem;
+        }
+        .modal-close {
+            float: right;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+        body.dark-mode .modal-close {
+            color: #aaa;
+        }
+
+        /* Find/Replace */
+        .find-replace-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .find-replace-row input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+        body.dark-mode .find-replace-row input {
+            background: #1a2540;
+            border-color: #2a3550;
+            color: #ccc;
+        }
+        .find-replace-row button {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        .find-btn {
+            background: #4fc3f7;
+            color: #1a2540;
+        }
+        .replace-btn {
+            background: #1a2540;
+            color: white;
+        }
+        .replace-all-btn {
+            background: #4caf50;
+            color: white;
+        }
+
+        /* Keyboard Shortcuts */
+        .shortcuts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .shortcut-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background: #f5f5f5;
+            border-radius: 4px;
+        }
+        body.dark-mode .shortcut-item {
+            background: #1a2540;
+        }
+        .shortcut-key {
+            font-family: monospace;
+            background: #1a2540;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        body.dark-mode .shortcut-key {
+            background: #4fc3f7;
+            color: #1a2540;
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .toast {
+            background: #1a2540;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            animation: slideIn 0.3s ease;
+        }
+        .toast.success {
+            background: #4caf50;
+        }
+        .toast.error {
+            background: #f44336;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Page Numbers */
+        .page-number {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            color: #666;
+            z-index: 5;
+        }
+
+        /* Header buttons */
+        .header-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .header-icon-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .header-icon-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .header-icon-btn.active {
+            background: #4fc3f7;
+            color: #1a2540;
+        }
+
+        /* Auto-save indicator */
+        .autosave-indicator {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.6);
+            margin-left: 8px;
+        }
+        .autosave-indicator.saving {
+            color: #4fc3f7;
+        }
+
+        /* Page break marker */
+        .page-break-marker {
+            border: none;
+            border-top: 2px dashed #4fc3f7;
+            margin: 16px 0;
+            position: relative;
+        }
+        .page-break-marker::after {
+            content: 'Page Break';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 0 8px;
+            font-size: 10px;
+            color: #4fc3f7;
+        }
     </style>
 </head>
 <body>
@@ -632,6 +950,11 @@
                 <h1>Fountain Letterhead Filler</h1>
                 <p>Create professional letterhead documents</p>
             </div>
+            <span class="autosave-indicator" id="autosaveIndicator"></span>
+        </div>
+        <div class="header-actions">
+            <button class="header-icon-btn" onclick="toggleShortcutsModal()" title="Keyboard Shortcuts">⌨</button>
+            <button class="header-icon-btn" id="darkModeBtn" onclick="toggleDarkMode()" title="Toggle Dark Mode">🌙</button>
         </div>
         <div class="letterhead-buttons">
             <button class="lh-btn trt active" onclick="selectLetterhead(1)">
@@ -687,10 +1010,17 @@
             <div class="sidebar-section" style="flex:1; display:flex; flex-direction:column;">
                 <h3>Document Content</h3>
                 <div class="editor-toolbar">
-                    <button class="toolbar-btn" onclick="execCmd('bold')" title="Bold"><b>B</b></button>
+                    <button class="toolbar-btn" onclick="undo()" title="Undo (Ctrl+Z)">↶</button>
+                    <button class="toolbar-btn" onclick="redo()" title="Redo (Ctrl+Y)">↷</button>
+                    <div class="toolbar-divider"></div>
+                    <button class="toolbar-btn" onclick="execCmd('bold')" title="Bold (Ctrl+B)"><b>B</b></button>
                     <button class="toolbar-btn" onclick="execCmd('italic')" title="Italic"><i>I</i></button>
                     <button class="toolbar-btn" onclick="execCmd('underline')" title="Underline"><u>U</u></button>
                     <button class="toolbar-btn" onclick="execCmd('strikeThrough')" title="Strikethrough"><s>S</s></button>
+                    <div class="color-picker-wrapper">
+                        <button class="toolbar-btn color-picker-btn" onclick="document.getElementById('textColorPicker').click()" title="Text Color">A</button>
+                        <input type="color" id="textColorPicker" class="color-input" value="#000000" onchange="applyTextColor(this.value)">
+                    </div>
                     <div class="toolbar-divider"></div>
                     <button class="toolbar-btn" onclick="execCmd('justifyLeft')" title="Align Left">⫷</button>
                     <button class="toolbar-btn" onclick="execCmd('justifyCenter')" title="Align Center">☰</button>
@@ -698,6 +1028,8 @@
                     <div class="toolbar-divider"></div>
                     <button class="toolbar-btn" onclick="execCmd('insertUnorderedList')" title="Bullet List">•</button>
                     <button class="toolbar-btn" onclick="execCmd('insertOrderedList')" title="Numbered List">1.</button>
+                    <button class="toolbar-btn" onclick="insertPageBreak()" title="Page Break">⏎</button>
+                    <button class="toolbar-btn" onclick="toggleFindReplace()" title="Find & Replace (Ctrl+F)">🔍</button>
                     <div class="toolbar-divider"></div>
                     <select class="toolbar-select" onchange="execCmdArg('fontName', this.value)" title="Font Family">
                         <option value="Arial">Arial</option>
@@ -744,7 +1076,8 @@
                     <span class="preview-label">Preview</span>
                     <span class="page-count-badge" id="pageCountBadge">1 Page</span>
                 </div>
-                <button class="print-btn" onclick="window.print()">🖨 Print / Save PDF</button>
+                <button class="print-btn" onclick="downloadPDF()">📥 Download PDF</button>
+                <button class="print-btn" onclick="window.print()">🖨 Print</button>
             </div>
             <div class="preview-controls">
                 <div class="zoom-control">
@@ -755,6 +1088,10 @@
                 <div class="draft-control">
                     <input type="checkbox" class="draft-checkbox" id="draftCheckbox" onchange="toggleDraft()">
                     <label for="draftCheckbox">DRAFT Watermark</label>
+                </div>
+                <div class="page-num-control draft-control">
+                    <input type="checkbox" class="draft-checkbox" id="pageNumCheckbox" onchange="togglePageNumbers()">
+                    <label for="pageNumCheckbox">Page Numbers</label>
                 </div>
             </div>
             <div class="preview-area" id="previewArea">
@@ -940,6 +1277,45 @@
 </head>
 <body>
 ${editor.innerHTML}
+
+    <!-- Find/Replace Modal -->
+    <div class="modal-overlay" id="findReplaceModal">
+        <div class="modal">
+            <button class="modal-close" onclick="toggleFindReplace()">&times;</button>
+            <h2>Find & Replace</h2>
+            <div class="find-replace-row">
+                <input type="text" id="findInput" placeholder="Find...">
+                <button class="find-btn" onclick="findText()">Find</button>
+            </div>
+            <div class="find-replace-row">
+                <input type="text" id="replaceInput" placeholder="Replace with...">
+                <button class="replace-btn" onclick="replaceText()">Replace</button>
+                <button class="replace-all-btn" onclick="replaceAllText()">Replace All</button>
+            </div>
+            <div id="findResults" style="font-size: 0.85rem; color: #666; margin-top: 8px;"></div>
+        </div>
+    </div>
+
+    <!-- Keyboard Shortcuts Modal -->
+    <div class="modal-overlay" id="shortcutsModal">
+        <div class="modal">
+            <button class="modal-close" onclick="toggleShortcutsModal()">&times;</button>
+            <h2>Keyboard Shortcuts</h2>
+            <div class="shortcuts-grid">
+                <div class="shortcut-item"><span>Undo</span><span class="shortcut-key">Ctrl+Z</span></div>
+                <div class="shortcut-item"><span>Redo</span><span class="shortcut-key">Ctrl+Y</span></div>
+                <div class="shortcut-item"><span>Bold</span><span class="shortcut-key">Ctrl+B</span></div>
+                <div class="shortcut-item"><span>Italic</span><span class="shortcut-key">Ctrl+I</span></div>
+                <div class="shortcut-item"><span>Underline</span><span class="shortcut-key">Ctrl+U</span></div>
+                <div class="shortcut-item"><span>Find</span><span class="shortcut-key">Ctrl+F</span></div>
+                <div class="shortcut-item"><span>Save Draft</span><span class="shortcut-key">Ctrl+S</span></div>
+                <div class="shortcut-item"><span>Print</span><span class="shortcut-key">Ctrl+P</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
 </body>
 </html>`;
 
@@ -1102,6 +1478,14 @@ ${editor.innerHTML}
                 watermark.className = 'draft-watermark' + (showDraft ? ' show' : '');
                 watermark.textContent = 'DRAFT';
                 page.appendChild(watermark);
+
+                // Page numbers
+                if (showPageNumbers) {
+                    const pageNum = document.createElement('div');
+                    pageNum.className = 'page-number';
+                    pageNum.textContent = 'Page ' + (i + 1) + ' of ' + pages.length;
+                    page.appendChild(pageNum);
+                }
 
                 wrapper.appendChild(page);
                 previewArea.appendChild(wrapper);
@@ -1309,10 +1693,250 @@ ${editor.innerHTML}
             return parts.length > 0 ? parts : [{ html: htmlString, height: 0, startsNewPage: false }];
         }
 
+
+        // Undo/Redo functionality
+        let undoStack = [];
+        let redoStack = [];
+        let isUndoRedo = false;
+
+        function saveState() {
+            if (isUndoRedo) return;
+            const editor = document.getElementById('editor');
+            undoStack.push(editor.innerHTML);
+            if (undoStack.length > 50) undoStack.shift();
+            redoStack = [];
+        }
+
+        function undo() {
+            const editor = document.getElementById('editor');
+            if (undoStack.length > 0) {
+                isUndoRedo = true;
+                redoStack.push(editor.innerHTML);
+                editor.innerHTML = undoStack.pop();
+                updatePreview();
+                updateWordCount();
+                isUndoRedo = false;
+                showToast('Undo successful');
+            }
+        }
+
+        function redo() {
+            const editor = document.getElementById('editor');
+            if (redoStack.length > 0) {
+                isUndoRedo = true;
+                undoStack.push(editor.innerHTML);
+                editor.innerHTML = redoStack.pop();
+                updatePreview();
+                updateWordCount();
+                isUndoRedo = false;
+                showToast('Redo successful');
+            }
+        }
+
+        // Auto-save to localStorage
+        let autoSaveTimeout;
+        function autoSave() {
+            clearTimeout(autoSaveTimeout);
+            autoSaveTimeout = setTimeout(() => {
+                const editor = document.getElementById('editor');
+                const indicator = document.getElementById('autosaveIndicator');
+                indicator.textContent = 'Saving...';
+                indicator.classList.add('saving');
+
+                localStorage.setItem('letterhead_draft', editor.innerHTML);
+                localStorage.setItem('letterhead_lh', currentLH);
+                localStorage.setItem('letterhead_draft_time', new Date().toISOString());
+
+                setTimeout(() => {
+                    indicator.textContent = 'Saved';
+                    indicator.classList.remove('saving');
+                    setTimeout(() => { indicator.textContent = ''; }, 2000);
+                }, 500);
+            }, 1000);
+        }
+
+        function loadAutoSave() {
+            const saved = localStorage.getItem('letterhead_draft');
+            const savedLH = localStorage.getItem('letterhead_lh');
+            if (saved) {
+                document.getElementById('editor').innerHTML = saved;
+                if (savedLH) selectLetterhead(parseInt(savedLH));
+                updatePreview();
+                updateWordCount();
+                showToast('Draft restored from auto-save');
+            }
+        }
+
+        // Dark mode
+        let darkMode = localStorage.getItem('darkMode') === 'true';
+        function toggleDarkMode() {
+            darkMode = !darkMode;
+            document.body.classList.toggle('dark-mode', darkMode);
+            document.getElementById('darkModeBtn').classList.toggle('active', darkMode);
+            localStorage.setItem('darkMode', darkMode);
+            showToast(darkMode ? 'Dark mode enabled' : 'Light mode enabled');
+        }
+
+        function initDarkMode() {
+            if (darkMode) {
+                document.body.classList.add('dark-mode');
+                document.getElementById('darkModeBtn').classList.add('active');
+            }
+        }
+
+        // PDF Download using html2canvas approach (simplified - uses print)
+        function downloadPDF() {
+            showToast('Opening print dialog - select "Save as PDF"');
+            setTimeout(() => window.print(), 500);
+        }
+
+        // Page break
+        function insertPageBreak() {
+            insertAtCursor('<hr class="page-break-marker">');
+            showToast('Page break inserted');
+        }
+
+        // Text color
+        function applyTextColor(color) {
+            document.execCommand('foreColor', false, color);
+            document.getElementById('editor').focus();
+            saveState();
+        }
+
+        // Page numbers
+        let showPageNumbers = false;
+        function togglePageNumbers() {
+            showPageNumbers = document.getElementById('pageNumCheckbox').checked;
+            updatePreview();
+        }
+
+        // Find & Replace
+        function toggleFindReplace() {
+            const modal = document.getElementById('findReplaceModal');
+            modal.classList.toggle('show');
+            if (modal.classList.contains('show')) {
+                document.getElementById('findInput').focus();
+            }
+        }
+
+        function findText() {
+            const searchText = document.getElementById('findInput').value;
+            if (!searchText) return;
+
+            const editor = document.getElementById('editor');
+            const content = editor.innerText;
+            const matches = content.split(searchText).length - 1;
+
+            document.getElementById('findResults').textContent = matches + ' match(es) found';
+
+            if (matches > 0 && window.find) {
+                window.find(searchText);
+            }
+        }
+
+        function replaceText() {
+            const searchText = document.getElementById('findInput').value;
+            const replaceWith = document.getElementById('replaceInput').value;
+            if (!searchText) return;
+
+            saveState();
+            const editor = document.getElementById('editor');
+            const selection = window.getSelection();
+
+            if (selection.toString() === searchText) {
+                document.execCommand('insertText', false, replaceWith);
+                showToast('Replaced 1 instance');
+                updatePreview();
+            } else {
+                findText();
+            }
+        }
+
+        function replaceAllText() {
+            const searchText = document.getElementById('findInput').value;
+            const replaceWith = document.getElementById('replaceInput').value;
+            if (!searchText) return;
+
+            saveState();
+            const editor = document.getElementById('editor');
+            const content = editor.innerHTML;
+            const matches = content.split(searchText).length - 1;
+            editor.innerHTML = content.split(searchText).join(replaceWith);
+
+            updatePreview();
+            updateWordCount();
+            document.getElementById('findResults').textContent = 'Replaced ' + matches + ' instance(s)';
+            showToast('Replaced ' + matches + ' instance(s)');
+        }
+
+        // Shortcuts modal
+        function toggleShortcutsModal() {
+            document.getElementById('shortcutsModal').classList.toggle('show');
+        }
+
+        // Toast notifications
+        function showToast(message, type = 'default') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key.toLowerCase()) {
+                    case 'z':
+                        if (!e.shiftKey) {
+                            e.preventDefault();
+                            undo();
+                        }
+                        break;
+                    case 'y':
+                        e.preventDefault();
+                        redo();
+                        break;
+                    case 'f':
+                        e.preventDefault();
+                        toggleFindReplace();
+                        break;
+                    case 's':
+                        e.preventDefault();
+                        saveDraft();
+                        showToast('Draft saved', 'success');
+                        break;
+                }
+            }
+            if (e.key === 'Escape') {
+                document.getElementById('findReplaceModal').classList.remove('show');
+                document.getElementById('shortcutsModal').classList.remove('show');
+            }
+        });
+
+        // Handle paste from clipboard
+        document.getElementById('editor').addEventListener('paste', function(e) {
+            saveState();
+            setTimeout(() => {
+                updatePreview();
+                updateWordCount();
+                autoSave();
+            }, 0);
+        });
+
+        // Save state on input for undo
+        document.getElementById('editor').addEventListener('input', function() {
+            saveState();
+            autoSave();
+        });
+
         // Initialize on load
         window.addEventListener('load', () => {
             generateLetterheads();
             updateWordCount();
+            initDarkMode();
+            loadAutoSave();
         });
     </script>
 </body>
